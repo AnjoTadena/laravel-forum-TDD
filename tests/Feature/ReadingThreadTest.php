@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Reply;
 use App\Thread;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -22,17 +23,32 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_user_can_view_all_threads()
     {
-        $response = $this->get('/threads');
-
-        $response->assertSee($this->thread->title);
-
+        $this->get('/threads')
+            ->assertSee($this->thread->title);
     }
 
     /** @test */
     public function a_use_can_view_a_single_thread()
     {
-        $response = $this->get(route('threads.show', $this->thread->id));
+        $this->get(route('threads.show', $this->thread->id))
+            ->assertSee($this->thread->title);        
+    }
 
-        $response->assertSee($this->thread->title);        
+    /** @test */
+    function a_user_can_view_replies_associeted_with_the_thread()
+    {
+        $reply = factory(Reply::class)->create(['thread_id' => $this->thread->id]);
+
+        $this->get(route('threads.show', $this->thread->id))
+            ->assertSee($reply->body);
+    }
+
+    /** @test */
+    function a_user_can_view_reply_owner()
+    {
+        $reply = factory(Reply::class)->create(['thread_id' => $this->thread->id]);
+
+        $this->get(route('threads.show', $this->thread->id))
+            ->assertSee($reply->owner->name);
     }
 }

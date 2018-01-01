@@ -11,7 +11,27 @@
                     {{ $thread->body }}
                 </div>
             </div>
+
+
         </div>
     </div>
+    <div class="row justify-content-center" style="padding: 10px;">
+        <div class="col-md-8">
+            <hr>
+            <h3>Replies</h3>
+
+            @foreach ($thread->replies as $reply)
+            <div class="panel">
+                <div class="panel-header"><a href="#">{{ $reply->owner->name }}</a> said {{ $reply->created_at->diffForHumans() }}...</div>
+
+                <div class="panel-body">
+                    {{ $reply->body }}
+                </div>
+            </div>
+            <hr>
+            @endforeach
+        </div>
+    </div>
+    
 </div>
 @endsection
