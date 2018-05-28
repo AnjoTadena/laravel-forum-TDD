@@ -2,9 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\User;
+use App\BaseModel;
 
-class Reply extends Model
+class Reply extends BaseModel
 {
     public function owner()
     {
