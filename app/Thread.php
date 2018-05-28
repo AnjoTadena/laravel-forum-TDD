@@ -2,13 +2,34 @@
 
 namespace App;
 
+use App\User;
 use App\Reply;
-use Illuminate\Database\Eloquent\Model;
+use App\BaseModel;
 
-class Thread extends Model
+class Thread extends BaseModel
 {
+	public function getCreatorNameAttribute()
+    {
+    	return $this->creator->name;
+    }
+
+    public function path()
+    {
+    	return '/threads/' . $this->id;
+    }
+
     public function replies()
     {
     	return $this->hasMany(Reply::class);
+    }
+
+    public function creator()
+    {
+    	return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function addReply($reply)
+    {
+    	$this->replies()->create($reply);
     }
 }
