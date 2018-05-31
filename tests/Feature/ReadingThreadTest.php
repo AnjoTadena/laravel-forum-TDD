@@ -5,11 +5,9 @@ namespace Tests\Feature;
 use App\Reply;
 use App\Thread;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ThreadTest extends TestCase
 {
-    use DatabaseMigrations;
     
     protected $thread;
 
@@ -17,7 +15,7 @@ class ThreadTest extends TestCase
     {
         parent::setUp();
 
-        $this->thread = factory(Thread::class)->create();
+        $this->thread = create(Thread::class);
     }
 
     /** @test */
@@ -37,7 +35,7 @@ class ThreadTest extends TestCase
     /** @test */
     function a_user_can_view_replies_associeted_with_the_thread()
     {
-        $reply = factory(Reply::class)->create(['thread_id' => $this->thread->id]);
+        $reply = create(Reply::class, ['thread_id' => $this->thread->id]);
 
         $this->get(route('threads.show', $this->thread->id))
             ->assertSee($reply->body);
@@ -46,7 +44,7 @@ class ThreadTest extends TestCase
     /** @test */
     function a_user_can_view_reply_owner()
     {
-        $reply = factory(Reply::class)->create(['thread_id' => $this->thread->id]);
+        $reply = create(Reply::class, ['thread_id' => $this->thread->id]);
 
         $this->get(route('threads.show', $this->thread->id))
             ->assertSee($reply->owner->name);

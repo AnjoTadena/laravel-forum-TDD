@@ -34,7 +34,8 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-        if (app()->environment() === 'testing') throw $exception;
+        // Check environment
+        // if ($this->isEnvironmentTesting()) { throw $exception; }
 
         parent::report($exception);
     }
@@ -49,5 +50,10 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         return parent::render($request, $exception);
+    }
+
+    public function isEnvironmentTesting()
+    {
+        return app()->environment() === 'testing';
     }
 }

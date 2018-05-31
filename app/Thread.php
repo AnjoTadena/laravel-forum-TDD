@@ -13,11 +13,6 @@ class Thread extends BaseModel
     	return $this->creator->name;
     }
 
-    public function path()
-    {
-    	return '/threads/' . $this->id;
-    }
-
     public function replies()
     {
     	return $this->hasMany(Reply::class);
@@ -28,6 +23,11 @@ class Thread extends BaseModel
     	return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function path()
+    {
+        return '/threads/' . $this->id;
+    }
+ 
     public function addReply($reply)
     {
     	$this->replies()->create($reply);

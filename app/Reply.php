@@ -11,4 +11,9 @@ class Reply extends BaseModel
     {
     	return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function getOwnerNameAttribute()
+    {
+    	return $this->owner->name;
+    }
 }

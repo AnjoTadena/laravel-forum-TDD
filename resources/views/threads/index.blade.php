@@ -3,18 +3,21 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Forum Threads</div>
+        
+        <div class="col-md-12">
+            <h2 class="text-center">Threads</h2>
+        </div>
 
-                <div class="card-body">
-                   	@foreach ($threads as $thread)
-						<h4><a href="{{ route('threads.show', $thread->id) }}">{{ $thread->title }}</a></h4>
+        @foreach ($threads as $thread)
+            <div class="col-md-8" style="margin: 10px 0;">
+                <div class="card">
+                    <div class="card-header"><a href="{{ route('threads.show', $thread->id) }}">{{ $thread->title }}</a></div>
+                    <div class="card-body">
 						<div class="body">{{ $thread->body }}</div>
-                   	@endforeach
+                    </div>
                 </div>
             </div>
-        </div>
+        @endforeach
     </div>
 </div>
 @endsection

@@ -6,42 +6,42 @@ use App\User;
 use App\Reply;
 use App\Thread;
 use Tests\TestCase;
-// use Illuminate\Auth\AuthenticationException;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Auth\AuthenticationException;
 
 class ParticipateInForumTest extends TestCase
 {
-	use DatabaseMigrations;
+    protected $thread;
 
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->thread = create(Thread::class);
+    }
 
 	/** @test */
     public function unauthenticated_user_may_not_add_reply()
     {
-    	$this->expectException('Illuminate\Auth\AuthenticationException');
+    	$this->expectException(AuthenticationException::class);
 
-    	// And an existing thread
-    	$thread = factory(Thread::class)->create();
-    	
     	// When the user adss a reply to the thread
-    	$this->post($thread->path() . '/replies', []);
+    	$this->post($this->thread->path() . '/replies', []);
     }
 
     /** @test */
     public function an_authenticated_user_may_participate_in_forum_threads()
     {
     	// Given we have authenticated user
-    	$this->signIn($user = factory(User::class)->create());
+    	$this->signIn($user = create(User::class));
 
-    	// And an existing thread
-    	$thread = factory(Thread::class)->create();
-
-    	$reply = factory(Reply::class)->make();
+    	$reply = make(Reply::class);
 
     	// When the user adss a reply to the thread
-    	$this->post($thread->path() . '/replies', $reply->toArray());
+    	$this->post($this->thread->path() . '/replies', $reply->toArray());
 
     	// Then their reply should be visible on the page.
-    	$this->get($thread->path())
+    	$this->get($this->thread->path())
     		->assertSee($reply->body);
     }
 }
+    

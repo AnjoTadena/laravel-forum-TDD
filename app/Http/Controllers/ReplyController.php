@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Reply;
 use App\Thread;
 use Illuminate\Http\Request;
+use App\Http\Requests\Reply\StoreRequest as ReplyStoreRequest;
 
 class ReplyController extends Controller
 {
@@ -40,7 +41,7 @@ class ReplyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Thread $thread, Request $request)
+    public function store(Thread $thread, ReplyStoreRequest $request)
     {
         $thread->addReply(
             [
