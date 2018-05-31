@@ -28,7 +28,7 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_use_can_view_a_single_thread()
     {
-        $this->get(route('threads.show', $this->thread->id))
+        $this->get($this->thread->path())
             ->assertSee($this->thread->title);        
     }
 
@@ -37,7 +37,7 @@ class ThreadTest extends TestCase
     {
         $reply = create(Reply::class, ['thread_id' => $this->thread->id]);
 
-        $this->get(route('threads.show', $this->thread->id))
+        $this->get($this->thread->path())
             ->assertSee($reply->body);
     }
 
@@ -46,7 +46,7 @@ class ThreadTest extends TestCase
     {
         $reply = create(Reply::class, ['thread_id' => $this->thread->id]);
 
-        $this->get(route('threads.show', $this->thread->id))
+        $this->get($this->thread->path())
             ->assertSee($reply->owner->name);
     }
 }

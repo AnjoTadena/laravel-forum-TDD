@@ -14,10 +14,12 @@ class CreateThreadTest extends TestCase
 	{
         $this->withExceptionHandling();
 
+        $thread = create(Thread::class);
+
         $this->get('/threads/create')
             ->assertRedirect('/login');
 
-		$this->post('/threads', [])
+		$this->post("/threads/{$thread->channel->name}", [])
             ->assertRedirect('/login');
 	}
 
@@ -26,9 +28,9 @@ class CreateThreadTest extends TestCase
     {
     	$this->signIn();
 
-    	$thread = make(Thread::class);
+    	$thread = create(Thread::class);
 
-    	$this->post('/threads', $thread->toArray());
+        $this->post("/threads/{$thread->channel->slug}", $thread->toArray());
 
     	$this->get($thread->path())
     		->assertSee($thread->title)

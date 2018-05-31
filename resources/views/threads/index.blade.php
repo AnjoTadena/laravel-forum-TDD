@@ -11,7 +11,7 @@
         @foreach ($threads as $thread)
             <div class="col-md-8" style="margin: 10px 0;">
                 <div class="card">
-                    <div class="card-header"><a href="{{ route('threads.show', $thread->id) }}">{{ $thread->title }}</a></div>
+                    <div class="card-header"><a href="{{ route('threads.channel.show', ['channel' => $thread->channel->slug, 'thread' => $thread->id]) }}">{{ $thread->title }}</a></div>
                     <div class="card-body">
 						<div class="body">{{ $thread->body }}</div>
                     </div>

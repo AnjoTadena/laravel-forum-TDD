@@ -11,14 +11,23 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () { return view('welcome'); });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('threads', 'ThreadController');
+/**
+ * Threads routes
+ */
+Route::get('threads', 'threadcontroller@index')->name('threads.index');
 
-Route::resource('threads.replies', 'ReplyController');
+route::get('threads/create', 'threadcontroller@create')->name('threads.create');
+
+route::post('threads/{channel}', 'threadcontroller@store')->name('threads.channel.store');
+
+route::get('threads/{channel}/{thread}', 'threadcontroller@show')->name('threads.channel.show');
+
+route::delete('threads/{channel}/{thread}', 'ThreadController@destroy')->name('threads.channel.destroy');
+
+Route::post('threads/{channel}/{thread}/replies', 'ReplyController@store')->name('threads.channel.reply.store');

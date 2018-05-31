@@ -47,7 +47,17 @@ class ThreadTest extends TestCase
     {
         $this->withExceptionHandling();
 
+        $thread = create(Thread::class);
+
         $this->get('/threads/create')
             ->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function a_thread_can_make_string_path()
+    {
+        $thread = create(Thread::class);
+
+        $this->assertEquals("/threads/{$thread->channel->slug}/{$thread->id}", $thread->path());
     }
 }
