@@ -9,7 +9,7 @@
         </div>
         
         <div class="col-md-12">
-            <form action="{{ route('threads.store')}}" method="POST">
+            <form action="{{ route('threads.channel.store')}}" method="POST">
                 {{ csrf_field() }}
                 <div class="form-group">
                     <input class="form-control" id="title" name="title" placeholder="TItle" required/>
