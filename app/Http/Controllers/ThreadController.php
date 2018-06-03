@@ -6,6 +6,7 @@ use App\User;
 use App\Thread;
 use App\Channel;
 use Illuminate\Http\Request;
+use App\Filters\ThreadFilter;
 use Illuminate\Database\Query\latest;
 
 class ThreadController extends Controller
@@ -19,17 +20,9 @@ class ThreadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ThreadFilter $filter)
     {
-        $threads = Thread::latest();
-
-        if ($by = request('by')) {
-            $user = User::where('name', $by)->firstOrFail();
-
-            $threads->where('user_id', $user->id);
-        }
-
-        $threads = $threads->get();
+        $threads = $this->getThreads($filter);
 
         return view('threads.index', compact('threads'));
     }
@@ -112,5 +105,10 @@ class ThreadController extends Controller
     public function destroy(Thread $thread)
     {
         //
+    }
+
+    public function getThreads($filter)
+    {
+        return Thread::latest()->filter($filter)->get();
     }
 }

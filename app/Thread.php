@@ -62,4 +62,9 @@ class Thread extends BaseModel
     {
         return $this->belongsTo(Channel::class);
     }
+
+    public function scopeFilter($query, $filter)
+    {
+        return $filter->apply($query);
+    }
 }
