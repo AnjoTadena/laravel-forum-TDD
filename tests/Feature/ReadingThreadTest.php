@@ -49,7 +49,7 @@ class ThreadTest extends TestCase
         $reply = create(Reply::class, ['thread_id' => $this->thread->id]);
 
         $this->get($this->thread->path())
-            ->assertSee($reply->owner->name);
+            ->assertSee($reply->ownerName);
     }
 
     /** @test */
