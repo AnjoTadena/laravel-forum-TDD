@@ -22,9 +22,11 @@ Route::get('/home', 'HomeController@index')->name('home');
  */
 Route::get('threads', 'threadcontroller@index')->name('threads.index');
 
-route::get('threads/create', 'threadcontroller@create')->name('threads.create');
+route::get('threads/create', 'Threadcontroller@create')->name('threads.create');
 
-route::post('threads', 'threadcontroller@store')->name('threads.channel.store');
+route::post('threads', 'Threadcontroller@store')->name('threads.channel.store');
+
+route::get('threads/{channel}', 'ChannelController@index')->name('threads.channel.index');
 
 route::get('threads/{channel}/{thread}', 'threadcontroller@show')->name('threads.channel.show');
 
