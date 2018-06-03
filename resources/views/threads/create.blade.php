@@ -19,7 +19,7 @@
             <form action="{{ route('threads.channel.store')}}" method="POST">
                 {{ csrf_field() }}
                 <div class="form-group">
-                    <select class="form-control" id="channel_id" name="channel_id">
+                    <select class="form-control" id="channel_id" name="channel_id" required>
                         <option value="">Please Select a channel</option>
                         @foreach (\App\Channel::all() as $channel)
                         <option value="{{$channel->id}}" {{ $channel->id == old('channel_id') ? 'selected' : '' }}>{{$channel->name}}</option>
@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="form-group">
-                    <input class="form-control" id="title" name="title" placeholder="TItle" value="{{old('title')}}"/>
+                    <input class="form-control" id="title" name="title" placeholder="TItle" value="{{old('title')}}" required/>
                 </div>
 
                 <div class="form-group">
