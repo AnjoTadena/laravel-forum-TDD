@@ -60,13 +60,6 @@ class CreateThreadTest extends TestCase
     }
 
     /** @test */
-    public function a_thread_user_id_is_required()
-    {
-        $this->publishThread(['user_id' => null])
-            ->assertSessionHasErrors('user_id');
-    }
-
-    /** @test */
     public function a_thread_channel_id_must_be_valid()
     {
         factory(Channel::class, 2)->create();
