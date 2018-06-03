@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use App\Reply;
 use App\Thread;
 use App\Channel;
@@ -63,5 +64,19 @@ class ThreadTest extends TestCase
         $this->get('/threads/' . $channel->slug)
             ->assertSee($threadInAChannel->title)
             ->assertDontSee($threadNotInChannel->title);
+    }
+
+    /** @test */
+    public function a_user_can_filter_by_username()
+    {
+        $this->signIn(create(User::class, ['name' => 'JohnDoe']));
+
+        $threadByJohnDoe = create(Thread::class, ['user_id' => auth()->id()]);
+
+        $threadNotByJohnDoe = create(Thread::class);
+
+        $this->get('/threads?by=JohnDoe')
+            ->assertSee($threadByJohnDoe->title)
+            ->assertDontSee($threadNotByJohnDoe->title);
     }
 }
