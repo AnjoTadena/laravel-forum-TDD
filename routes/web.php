@@ -20,7 +20,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 /**
  * Threads routes
  */
-Route::get('threads', 'threadcontroller@index')->name('threads.index');
+Route::get('threads', 'Threadcontroller@index')->name('threads.index');
 
 route::get('threads/create', 'Threadcontroller@create')->name('threads.create');
 
