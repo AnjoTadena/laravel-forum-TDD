@@ -52,7 +52,7 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_filter_a_threads_according_to_tag()
+    public function a_user_can_filter_a_threads_according_to_channel()
     {
         $channel = create(Channel::class);
         
