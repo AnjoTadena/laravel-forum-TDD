@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Reply;
 use App\Thread;
+use App\Channel;
 use Tests\TestCase;
 
 class ThreadTest extends TestCase
@@ -48,5 +49,19 @@ class ThreadTest extends TestCase
 
         $this->get($this->thread->path())
             ->assertSee($reply->owner->name);
+    }
+
+    /** @test */
+    public function a_user_can_filter_a_threads_according_to_tag()
+    {
+        $channel = create(Channel::class);
+        
+        $threadInAChannel = create(Thread::class, ['channel_id' => $channel->id]);
+
+        $threadNotInChannel = create(Thread::class);
+
+        $this->get('/threads/' . $channel->slug)
+            ->assertSee($threadInAChannel->title)
+            ->assertDontSee($threadNotInChannel->title);
     }
 }
