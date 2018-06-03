@@ -14,7 +14,7 @@ class ChannelController extends Controller
      */
     public function index(Channel $channel)
     {
-        $threads = $channel->threads()->latest()->get();
+        $threads = $channel->exists ? $channel->threads()->latest()->get() : [];
 
         return view('threads.index', compact('threads'));
     }
