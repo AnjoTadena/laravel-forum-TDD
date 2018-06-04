@@ -16,12 +16,14 @@
             </div>
 
             <hr>
-            
+
             <h3>Replies</h3>
 
-            @foreach ($thread->replies as $reply)
+            @foreach ($replies as $reply)
                 @include ('threads.reply')
             @endforeach
+
+            {{ $replies->links() }}
 
             @if (auth()->check())
                 @include ('partials.errors')
