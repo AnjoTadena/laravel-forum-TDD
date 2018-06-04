@@ -6,14 +6,22 @@ use App\User;
 use App\Reply;
 use App\Channel;
 use App\BaseModel;
+use App\Scopes\ThreadReplyCountScope;
 
 class Thread extends BaseModel
 {
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::addGlobalScope(new ThreadReplyCountScope);
+    }
+
     /**
      * Creator Name Attribute
      * @return string
      */
-	public function getCreatorNameAttribute()
+	public function getCreatorNameAttributes()
     {
     	return $this->creator->name;
     }
