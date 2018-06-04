@@ -79,4 +79,26 @@ class ThreadTest extends TestCase
             ->assertSee($threadByJohnDoe->title)
             ->assertDontSee($threadNotByJohnDoe->title);
     }
+
+    /** @test */
+    public function a_use_can_filter_by_popularity()
+    {
+        // Given we have 4 threads
+        // first thread have 5 replies
+        $threadWithFiveReplies = create(Thread::class);
+        create(Reply::class, ['thread_id' => $threadWithFiveReplies->id], 5);
+
+        // second thread have 2 replies
+        $threadWithTwoReplies = create(Thread::class);
+        create(Reply::class, ['thread_id' => $threadWithTwoReplies->id], 2);
+
+        // fourth thread have 4 replies
+        $threadWithFourReplies = create(Thread::class);
+        create(Reply::class, ['thread_id' => $threadWithFourReplies->id], 4);
+
+        // we return a json order by popularity
+        $responseJson = $this->getJson('/threads?popular=1')->json();
+
+        $this->assertEquals([5, 4, 2, 0], array_column($responseJson, 'replies_count'));
+    }
 }
