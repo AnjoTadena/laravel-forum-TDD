@@ -33,3 +33,5 @@ route::get('threads/{channel}/{thread}', 'threadcontroller@show')->name('threads
 route::delete('threads/{channel}/{thread}', 'ThreadController@destroy')->name('threads.channel.destroy');
 
 Route::post('threads/{channel}/{thread}/replies', 'ReplyController@store')->name('threads.channel.reply.store');
+
+Route::resource('replies.favorites', 'FavoriteController');
