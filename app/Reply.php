@@ -29,6 +29,6 @@ class Reply extends BaseModel
 
     	if ($this->favorites()->where($attributes)->exists()) return;
 
-    	$this->favorites()->create($attributes);	
+    	return $this->favorites()->create($attributes);	
     }
 }
