@@ -10,6 +10,9 @@ use App\Scopes\ThreadReplyCountScope;
 
 class Thread extends BaseModel
 {
+
+    protected $with = ['creator'];
+
     protected static function boot()
     {
         parent::boot();
@@ -32,7 +35,8 @@ class Thread extends BaseModel
      */
     public function replies()
     {
-    	return $this->hasMany(Reply::class);
+    	return $this->hasMany(Reply::class)
+                    ->withCount('favorites');
     }
 
     /**
